@@ -27,22 +27,15 @@
                     },
                     colors: {
                         eco: {
-                            50: '#f2fbf5',
-                            100: '#e1f6e8',
-                            200: '#c3ecd3',
-                            300: '#95dbb2',
-                            400: '#5fc18a',
-                            500: '#3aa06c', /* Warna Utama */
-                            600: '#2a8053',
-                            700: '#236644',
-                            800: '#1e5138',
-                            900: '#1a432f',
+                            50: '#f2fbf5', 100: '#e1f6e8', 200: '#c3ecd3', 300: '#95dbb2',
+                            400: '#5fc18a', 500: '#3aa06c', 600: '#2a8053', 700: '#236644',
+                            800: '#1e5138', 900: '#1a432f',
                         },
                         dark: '#0f172a'
                     },
                     animation: {
                         'blob': 'blob 7s infinite',
-                        'marquee': 'marquee 25s linear infinite',
+                        'marquee': 'marquee 30s linear infinite', // 30 detik biar enak dibaca
                     },
                     keyframes: {
                         blob: {
@@ -52,6 +45,7 @@
                             '100%': { transform: 'translate(0px, 0px) scale(1)' },
                         },
                         marquee: {
+                            // KUNCI SEAMLESS: Bergerak dari 0 ke -100%
                             '0%': { transform: 'translateX(0%)' },
                             '100%': { transform: 'translateX(-100%)' },
                         }
@@ -398,24 +392,42 @@
         </div>
     </section>
 
-    <div class="bg-white py-6 border-b border-slate-100 overflow-hidden relative">
-        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
-        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>
-        <div class="flex whitespace-nowrap animate-marquee items-center opacity-60">
-            <span class="mx-8 text-xl font-display font-bold text-slate-400">#MulaiDariRumah</span>
-            <span class="mx-8 text-xl text-slate-300">•</span>
-            <span class="mx-8 text-xl font-display font-bold text-slate-400">Kurangi Plastik Sekali Pakai</span>
-            <span class="mx-8 text-xl text-slate-300">•</span>
-            <span class="mx-8 text-xl font-display font-bold text-slate-400">Hemat Air 30%</span>
-            <span class="mx-8 text-xl text-slate-300">•</span>
-            <span class="mx-8 text-xl font-display font-bold text-slate-400">Kompos Sisa Makanan</span>
-            <span class="mx-8 text-xl text-slate-300">•</span>
-            <span class="mx-8 text-xl font-display font-bold text-slate-400">#MulaiDariRumah</span>
-            <span class="mx-8 text-xl text-slate-300">•</span>
-            <span class="mx-8 text-xl font-display font-bold text-slate-400">Kurangi Plastik Sekali Pakai</span>
-            <span class="mx-8 text-xl text-slate-300">•</span>
-            <span class="mx-8 text-xl font-display font-bold text-slate-400">Hemat Air 30%</span>
-            <span class="mx-8 text-xl text-slate-300">•</span>
+    <div class="bg-white py-8 border-b border-slate-100 overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+        <div class="flex whitespace-nowrap">
+
+            <div class="flex items-center animate-marquee">
+                <span
+                    class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">#MulaiDariRumah</span>
+                <span class="text-slate-300 text-2xl">•</span>
+                <span class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">Kurangi
+                    Plastik Sekali Pakai</span>
+                <span class="text-slate-300 text-2xl">•</span>
+                <span class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">Hemat Air
+                    30%</span>
+                <span class="text-slate-300 text-2xl">•</span>
+                <span class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">Kompos Sisa
+                    Makanan</span>
+                <span class="text-slate-300 text-2xl">•</span>
+            </div>
+
+            <div class="flex items-center animate-marquee">
+                <span
+                    class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">#MulaiDariRumah</span>
+                <span class="text-slate-300 text-2xl">•</span>
+                <span class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">Kurangi
+                    Plastik Sekali Pakai</span>
+                <span class="text-slate-300 text-2xl">•</span>
+                <span class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">Hemat Air
+                    30%</span>
+                <span class="text-slate-300 text-2xl">•</span>
+                <span class="mx-8 text-xl font-display font-bold text-slate-400 uppercase tracking-widest">Kompos Sisa
+                    Makanan</span>
+                <span class="text-slate-300 text-2xl">•</span>
+            </div>
+
         </div>
     </div>
 
@@ -1005,6 +1017,7 @@
     </footer>
 
     <script>
+        // 1. Inisialisasi AOS (Tetap sama)
         AOS.init({
             once: true,
             offset: 50,
@@ -1012,49 +1025,51 @@
             easing: 'ease-out-cubic',
         });
 
+        // 2. Logic Typewriter Premium
+        const typewriterElement = document.getElementById('typewriter');
         const words = ["Aksi Nyata.", "Kepedulianmu.", "Langkah Kecil."];
-        let i = 0;
-        let timer;
-        const speed = 100;
-        const delay = 2000;
 
-        function typingEffect() {
-            let word = words[i].split("");
-            var loopTyping = function () {
-                if (word.length > 0) {
-                    document.getElementById('typewriter').innerHTML += word.shift();
-                } else {
-                    setTimeout(deletingEffect, delay);
-                    return false;
-                };
-                timer = setTimeout(loopTyping, speed);
-            };
-            loopTyping();
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function type() {
+            // Ambil kata saat ini berdasarkan index
+            const currentWord = words[wordIndex];
+
+            // Tentukan teks yang akan ditampilkan
+            if (isDeleting) {
+                // Jika sedang menghapus, kurangi karakter
+                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50; // Kecepatan menghapus lebih cepat
+            } else {
+                // Jika sedang mengetik, tambah karakter
+                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 150; // Kecepatan mengetik normal
+            }
+
+            // Logika perpindahan status
+            if (!isDeleting && charIndex === currentWord.length) {
+                // Berhenti sebentar setelah kata selesai diketik
+                isDeleting = true;
+                typeSpeed = 2000; // Delay sebelum mulai menghapus
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
         }
 
-        function deletingEffect() {
-            let word = words[i].split("");
-            var loopDeleting = function () {
-                if (word.length > 0) {
-                    word.pop();
-                    document.getElementById('typewriter').innerHTML = word.join("");
-                } else {
-                    if (words.length > (i + 1)) {
-                        i++;
-                    } else {
-                        i = 0;
-                    };
-                    typingEffect();
-                    return false;
-                };
-                timer = setTimeout(loopDeleting, speed / 2);
-            };
-            loopDeleting();
-        }
-
-        document.addEventListener("DOMContentLoaded", function (event) {
-            document.getElementById('typewriter').innerHTML = "";
-            setTimeout(typingEffect, 500);
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typewriterElement) {
+                typewriterElement.textContent = "";
+                setTimeout(type, 1000);
+            }
         });
     </script>
 </body>
