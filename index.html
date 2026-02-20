@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoHacks | Revolusi Hijau dari Rumah</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Clash Display', 'sans-serif'],
+                    },
+                    colors: {
+                        eco: {
+                            50: '#f2fbf5',
+                            100: '#e1f6e8',
+                            200: '#c3ecd3',
+                            300: '#95dbb2',
+                            400: '#5fc18a',
+                            500: '#3aa06c', /* Warna Utama */
+                            600: '#2a8053',
+                            700: '#236644',
+                            800: '#1e5138',
+                            900: '#1a432f',
+                        },
+                        dark: '#0f172a'
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3aa06c;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2a8053;
+        }
+
+        ::selection {
+            background: #3aa06c;
+            color: white;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bg-wave-bottom {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,128L48,138.7C96,149,192,171,288,165.3C384,160,480,128,576,133.3C672,139,768,181,864,197.3C960,213,1056,203,1152,170.7C1248,139,1344,85,1392,58.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #3aa06c;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: #e2e8f0;
+            border-radius: 99px;
+        }
+
+        .delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .delay-4000 {
+            animation-delay: 4s;
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans text-slate-800 bg-slate-50 relative selection:bg-eco-500 selection:text-white"
+    x-data="{ scrolled: false, mobileMenu: false, isLoading: true }"
+    x-init="setTimeout(() => { isLoading = false; AOS.refresh(); }, 1500)"
+    @scroll.window="scrolled = (window.pageYOffset > 50)">
+    <div x-show="isLoading" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-[1000] bg-white flex flex-col items-center justify-center">
+
+        <div class="relative flex items-center justify-center mb-6">
+            <div class="absolute w-24 h-24 border-4 border-eco-100 border-t-eco-500 rounded-full animate-spin"></div>
+            <div class="w-16 h-16 bg-eco-500 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <h2 class="font-display font-bold text-xl text-slate-900 tracking-tight">Eco<span
+                    class="text-eco-500">Hacks.</span></h2>
+            <div class="flex items-center gap-2 mt-2">
+                <span class="h-px w-8 bg-slate-200"></span>
+                <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Aether Code</p>
+                <span class="h-px w-8 bg-slate-200"></span>
+            </div>
+        </div>
+
+        <div class="w-48 h-1 bg-slate-100 rounded-full mt-8 overflow-hidden">
+            <div class="h-full bg-eco-500 transition-all duration-[1500ms] ease-out"
+                :style="isLoading ? 'width: 0%' : 'width: 100%'"></div>
+        </div>
+    </div>
+    <nav :class="{'py-5 bg-transparent': !scrolled, 'py-3 glass shadow-lg': scrolled}"
+        class="fixed w-full z-50 top-0 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+
+                <a href="#" class="flex items-center gap-2 group">
+                    <div
+                        class="w-10 h-10 bg-eco-500 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-12 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="font-display font-bold text-2xl tracking-tight text-slate-900">Eco<span
+                            class="text-eco-500">Hacks.</span></span>
+                </a>
+
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#hero"
+                        class="text-sm font-semibold text-eco-600 border-b-2 border-eco-500 pb-1">Beranda</a>
+                    <a href="kalkulatorjejak.html"
+                        class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Kalkulator
+                        Jejak</a>
+                    <a href="konten.html"
+                        class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Artikel
+                        Edukasi</a>
+                    <a href="about.html"
+                        class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Tentang
+                        Kami</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <a href="contact.html"
+                        class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all bg-dark rounded-full hover:bg-eco-600 hover:shadow-lg hover:shadow-eco-500/30">
+                        Kontak Tim
+                    </a>
+
+                    <button @click="mobileMenu = !mobileMenu"
+                        class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                        <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg x-show="mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div x-show="mobileMenu" x-collapse
+            class="lg:hidden bg-white border-t border-slate-100 shadow-xl absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#hero"
+                    class="block px-3 py-3 rounded-lg text-base font-semibold text-eco-600 bg-eco-50">Beranda</a>
+                <a href="kalkulatorjejak.html"
+                    class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Kalkulator
+                    Jejak</a>
+                <a href="konten.html"
+                    class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Artikel
+                    Edukasi</a>
+                <a href="about.html"
+                    class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Tentang
+                    Kami</a>
+                <a href="contact.html"
+                    class="block px-3 py-3 mt-4 text-center rounded-lg text-base font-bold text-white bg-eco-500">Kontak
+                    Tim</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="relative pt-24 pb-24 lg:pt-48 lg:pb-40 overflow-hidden bg-slate-50 isolate">
+
+        <div class="absolute inset-0 z-0 opacity-40 mix-blend-soft-light pointer-events-none"
+            style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%270 0 250 250%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cfilter id=%27noiseFilter%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%274%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23noiseFilter)%27/%3E%3C/svg%3E');">
+        </div>
+
+        <div class="absolute inset-0 z-0 opacity-[0.03] bg-repeat pointer-events-none"
+            style="background-image: url('https://www.transparenttextures.com/patterns/leaf.png'); background-size: 400px;">
+        </div>
+
+        <div
+            class="absolute top-0 -left-20 w-[500px] h-[500px] bg-eco-200 rounded-full mix-blend-multiply filter blur-[120px] opacity-80 animate-blob -z-10">
+        </div>
+        <div
+            class="absolute top-0 -right-20 w-[500px] h-[500px] bg-emerald-100 rounded-full mix-blend-multiply filter blur-[120px] opacity-80 animate-blob delay-2000 -z-10">
+        </div>
+        <div
+            class="absolute bottom-0 left-1/3 w-[600px] h-[600px] bg-teal-100 rounded-full mix-blend-multiply filter blur-[120px] opacity-60 animate-blob delay-4000 -z-10">
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+                <div class="lg:col-span-7 text-center lg:text-left" data-aos="fade-right" data-aos-duration="1000">
+
+                    <div
+                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-eco-200 shadow-sm mb-8 transition-transform hover:scale-105">
+                        <span class="flex h-2 w-2 relative">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-eco-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-eco-500"></span>
+                        </span>
+                        <span class="text-[10px] sm:text-xs font-black text-eco-700 uppercase tracking-[0.2em]">Aether
+                            Code | UNMER</span>
+                    </div>
+
+                    <h1
+                        class="font-display text-4xl sm:text-6xl lg:text-8xl font-bold leading-[1.1] text-slate-900 mb-8 tracking-tight">
+                        Bumi Butuh <br class="hidden sm:block">
+                        <span class="relative inline-block">
+                            <span
+                                class="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-eco-600 to-teal-500"
+                                id="typewriter">Aksi Nyata.</span>
+                            <span class="absolute bottom-2 left-0 w-full h-3 bg-eco-200/50 -z-0 rounded-full"></span>
+                        </span>
+                    </h1>
+
+                    <p
+                        class="text-base sm:text-lg text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium lg:pr-10">
+                        Kami mengumpulkan ratusan solusi praktis, panduan hidup minim sampah, dan trik hemat energi yang
+                        bisa kamu terapkan langsung dari rumahmu.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="kalkulatorjejak.html"
+                            class="w-full sm:w-auto inline-flex justify-center items-center gap-3 px-8 py-4 bg-eco-500 text-white rounded-2xl font-bold text-lg hover:bg-eco-600 hover:-translate-y-1 active:scale-95 transition-all shadow-xl shadow-eco-500/25 group relative overflow-hidden">
+                            <span class="relative z-10 flex items-center gap-3">
+                                Mulai Perubahan
+                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </span>
+                        </a>
+                        <a href="kalkulatorjejak.html"
+                            class="w-full sm:w-auto inline-flex justify-center items-center gap-3 px-8 py-4 bg-white/80 backdrop-blur-sm text-slate-700 border-2 border-white rounded-2xl font-bold text-lg hover:border-eco-500 hover:text-eco-600 transition-all shadow-sm hover:shadow-md">
+                            Hitung Jejak Karbon
+                        </a>
+                    </div>
+
+                    <div
+                        class="mt-12 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 text-sm font-semibold text-slate-500">
+                        <div class="flex -space-x-4">
+                            <img class="w-12 h-12 rounded-full border-4 border-slate-50 object-cover shadow-sm"
+                                src="https://i.pravatar.cc/150?u=6" alt="User">
+                            <img class="w-12 h-12 rounded-full border-4 border-slate-50 object-cover shadow-sm"
+                                src="https://i.pravatar.cc/150?u=7" alt="User">
+                            <img class="w-12 h-12 rounded-full border-4 border-slate-50 object-cover shadow-sm"
+                                src="https://i.pravatar.cc/150?u=8" alt="User">
+                            <div
+                                class="w-12 h-12 rounded-full border-4 border-slate-50 bg-eco-500 flex items-center justify-center text-white text-xs">
+                                +1k</div>
+                        </div>
+                        <p>Bergabung dengan <span
+                                class="text-slate-900 font-bold underline decoration-eco-500/30">1,200+</span> mahasiswa
+                            peduli.</p>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 relative mt-12 lg:mt-0" data-aos="zoom-in" data-aos-duration="1200">
+                    <div
+                        class="relative p-4 sm:p-6 bg-white/60 backdrop-blur-md rounded-[3rem] shadow-2xl shadow-eco-900/10 border border-white/50 rotate-2 hover:rotate-0 transition-transform duration-700">
+                        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
+                            alt="Nature Save" class="w-full h-[350px] sm:h-[500px] object-cover rounded-[2.5rem]">
+                    </div>
+
+                    <div class="absolute -top-6 -left-4 sm:-left-10 glass p-4 sm:p-5 rounded-3xl z-20 shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] animate-bounce"
+                        style="animation-duration: 4s;">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-tr from-green-100 to-emerald-50 text-green-600 rounded-2xl flex items-center justify-center text-xl shadow-sm">
+                                🌱</div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 font-black uppercase tracking-wider">Total Aksi</p>
+                                <p class="font-display font-bold text-lg sm:text-xl text-slate-900">12,450+</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="absolute -bottom-6 -right-4 sm:-right-6 glass p-5 sm:p-6 rounded-[2rem] z-20 shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] border border-white/80">
+                        <p class="text-[10px] font-black text-eco-600 uppercase tracking-widest mb-1">Target Kampus</p>
+                        <p class="font-display font-bold text-base sm:text-lg text-slate-900 mb-3 tracking-tight">Zero
+                            Waste 2026</p>
+                        <div class="w-32 sm:w-40 h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div class="w-[85%] h-full bg-gradient-to-r from-eco-400 to-teal-500 rounded-full relative">
+                                <span class="absolute right-0 top-0 h-full w-2 bg-white/30 animate-ping"></span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-2 font-bold text-right">85% Tercapai</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-white py-6 border-b border-slate-100 overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>
+        <div class="flex whitespace-nowrap animate-marquee items-center opacity-60">
+            <span class="mx-8 text-xl font-display font-bold text-slate-400">#MulaiDariRumah</span>
+            <span class="mx-8 text-xl text-slate-300">•</span>
+            <span class="mx-8 text-xl font-display font-bold text-slate-400">Kurangi Plastik Sekali Pakai</span>
+            <span class="mx-8 text-xl text-slate-300">•</span>
+            <span class="mx-8 text-xl font-display font-bold text-slate-400">Hemat Air 30%</span>
+            <span class="mx-8 text-xl text-slate-300">•</span>
+            <span class="mx-8 text-xl font-display font-bold text-slate-400">Kompos Sisa Makanan</span>
+            <span class="mx-8 text-xl text-slate-300">•</span>
+            <span class="mx-8 text-xl font-display font-bold text-slate-400">#MulaiDariRumah</span>
+            <span class="mx-8 text-xl text-slate-300">•</span>
+            <span class="mx-8 text-xl font-display font-bold text-slate-400">Kurangi Plastik Sekali Pakai</span>
+            <span class="mx-8 text-xl text-slate-300">•</span>
+            <span class="mx-8 text-xl font-display font-bold text-slate-400">Hemat Air 30%</span>
+            <span class="mx-8 text-xl text-slate-300">•</span>
+        </div>
+    </div>
+
+    <section id="kalkulator" class="py-24 bg-dark relative overflow-hidden">
+        <div
+            class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+        </div>
+        <div
+            class="absolute -top-40 -right-40 w-96 h-96 bg-eco-500 rounded-full mix-blend-screen filter blur-[100px] opacity-30">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-eco-400 font-bold tracking-wider uppercase text-sm">Kesadaran Diri</span>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white mt-2 mb-4">Seberapa Besar Beban
+                    Bumimu?</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Gunakan kalkulator simulasi ini untuk mengetahui estimasi
+                    kasar jejak karbon harianmu berdasarkan aktivitas dasar.</p>
+            </div>
+
+            <div x-data="{ transport: 10, listrik: 50, belanja: 2, get total() { return (this.transport * 0.2) + (this.listrik * 0.5) + (this.belanja * 1.5) } }"
+                class="max-w-4xl mx-auto glass-dark p-8 md:p-12 rounded-[2rem] shadow-2xl grid grid-cols-1 md:grid-cols-2 gap-12 border border-slate-700">
+
+                <div class="space-y-8">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-semibold text-slate-300">Jarak Tempuh Kendaraan (Km/Hari)</label>
+                            <span class="text-eco-400 font-bold" x-text="transport + ' Km'"></span>
+                        </div>
+                        <input type="range" x-model="transport" min="0" max="100" step="1">
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-semibold text-slate-300">Penggunaan Listrik (kWh/Bulan)</label>
+                            <span class="text-eco-400 font-bold" x-text="listrik + ' kWh'"></span>
+                        </div>
+                        <input type="range" x-model="listrik" min="10" max="300" step="5">
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-semibold text-slate-300">Belanja Plastik Sekali Pakai
+                                (Item/Minggu)</label>
+                            <span class="text-eco-400 font-bold" x-text="belanja + ' Item'"></span>
+                        </div>
+                        <input type="range" x-model="belanja" min="0" max="50" step="1">
+                    </div>
+                </div>
+
+                <div
+                    class="bg-slate-800/50 rounded-2xl p-8 border border-slate-600 text-center flex flex-col justify-center items-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-eco-900/40 pointer-events-none">
+                    </div>
+                    <p class="text-slate-400 text-sm font-medium mb-2 relative z-10">Estimasi Jejak Karbon Anda</p>
+                    <div class="relative z-10 font-display text-6xl font-black text-white mb-2">
+                        <span x-text="total.toFixed(1)"></span> <span class="text-2xl text-slate-500">Kg/CO₂</span>
+                    </div>
+
+                    <div class="mt-4 px-4 py-2 rounded-full text-sm font-bold relative z-10"
+                        :class="total > 40 ? 'bg-red-500/20 text-red-400' : total > 20 ? 'bg-yellow-500/20 text-yellow-400' : 'bg-green-500/20 text-green-400'">
+                        <span
+                            x-text="total > 40 ? 'Perlu Kurangi Emisi Segera!' : total > 20 ? 'Lumayan, Tapi Bisa Lebih Baik.' : 'Luar Biasa! Gaya Hidup Ramah Lingkungan.'"></span>
+                    </div>
+
+                    <a href="kalkulatorjejak.html"
+                        class="mt-6 text-sm text-eco-400 hover:text-white transition-colors underline decoration-eco-400 underline-offset-4">Gunakan
+                        Kalkulator Versi Lengkap &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="solusi" class="py-24 bg-white relative overflow-hidden" x-data="{ 
+            tab: 'dapur',
+            isModalOpen: false,
+            activeData: {},
+            guides: {
+                /* DATA DAPUR */
+                'kompos': { 
+                    title: 'Membuat Kompos Tanpa Bau', icon: '🪴', 
+                    img: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80',
+                    desc: 'Ubah sisa makanan menjadi pupuk cair organik untuk tanamanmu tanpa menimbulkan bau busuk.',
+                    steps: ['Siapkan wadah tertutup yang dilubangi kecil-kecil.', 'Lapisi dasar dengan sekam padi atau kardus bekas.', 'Cacah sisa sayuran sekecil mungkin sebelum dimasukkan.', 'Tambahkan tanah kompos/dekomposer untuk fermentasi.', 'Tutup rapat-rapat agar lalat tidak bertelur di dalam.']
+                },
+                'loofah': { 
+                    title: 'Spons Alami Loofah', icon: '🧽', 
+                    img: 'https://images.unsplash.com/photo-1466692476877-09623e80d466?w=800&q=80',
+                    desc: 'Pengganti spons cuci piring plastik sintetis yang diam-diam menyebarkan mikroplastik ke lautan.',
+                    steps: ['Beli oyong tua kering (loofah) di pasar atau toko online.', 'Kupas kulit luar yang keras dan buang bijinya.', 'Potong jaring loofah seukuran genggaman tanganmu.', 'Beri sabun cair dan gunakan mencuci piring seperti biasa.', 'Jika sudah hancur/rusak, cukup lempar ke pot tanaman untuk dikomposkan.']
+                },
+                'kulkas': { 
+                    title: 'Manajemen Kulkas', icon: '🫙', 
+                    img: 'https://images.unsplash.com/photo-1588964895597-cfccd6e2a0d9?w=800&q=80',
+                    desc: 'Cara tepat mengatur posisi bahan makanan agar awet dan tidak memicu Food Waste.',
+                    steps: ['Alasi wadah sayuran dengan tisu dapur kering untuk menyerap embun/lembab.', 'Simpan makanan matang di kotak kaca transparan agar tidak terlupa.', 'Terapkan sistem FIFO (First In First Out), taruh bahan lama di barisan paling depan.', 'Jangan pernah mencuci sayur/buah jika tidak langsung dimasak.', 'Jaga suhu ideal kulkas selalu stabil di 3-4°C.']
+                },
+                'jelantah': { 
+                    title: 'Olah Minyak Jelantah', icon: '🧪', 
+                    img: 'https://images.unsplash.com/photo-1605265021272-3c829e5e7dcb?w=800&q=80',
+                    desc: 'Jangan buang minyak bekas ke wastafel! Minyak jelantah bisa diolah menjadi biodiesel atau sabun.',
+                    steps: ['Dinginkan minyak bekas pakai.', 'Saring dari sisa makanan menggunakan kain halus.', 'Simpan dalam jerigen atau botol plastik bekas.', 'Setorkan ke bank sampah atau pengumpul minyak jelantah terdekat.', 'Jangan mencampurkan minyak dengan air atau zat lain.']
+                },
+
+                /* DATA ENERGI */
+                'vampir': { 
+                    title: 'Basmi Vampir Listrik', icon: '💡', 
+                    img: 'https://images.unsplash.com/photo-1493612276216-ee3925520721?w=800&q=80',
+                    desc: 'Ternyata alat elektronik yang posisinya standby (dimatikan remote) tetap menyedot listrik lho!',
+                    steps: ['Kenali alat dengan lampu indikator standby (seperti TV dan STB).', 'Cabut charger HP dari stopkontak jika tidak digunakan.', 'Gunakan stopkontak dengan tombol saklar agar mudah mematikan aliran listrik.', 'Matikan dispenser saat malam hari atau saat rumah kosong.', 'Cabut peralatan dapur (microwave, blender) jika tidak dipakai.']
+                },
+                'pencahayaan': { 
+                    title: 'Cahaya Alami Rumah', icon: '☀️', 
+                    img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80',
+                    desc: 'Maksimalkan cahaya matahari untuk mengurangi penggunaan lampu di siang hari.',
+                    steps: ['Buka gorden dan jendela lebar-lebar setiap pagi.', 'Gunakan cat tembok warna cerah untuk memantulkan cahaya.', 'Letakkan meja kerja di dekat jendela.', 'Gunakan genteng kaca transparan di area lorong atau dapur.', 'Bersihkan kaca jendela secara rutin agar cahaya masuk maksimal.']
+                },
+                'ac-pintar': { 
+                    title: 'Atur AC Lebih Pintar', icon: '❄️', 
+                    img: 'https://images.unsplash.com/photo-1631541495200-333dd390234a?w=800&q=80',
+                    desc: 'Pendingin ruangan adalah penyedot listrik terbesar. Atur pemakaiannya dengan efisien.',
+                    steps: ['Setel suhu AC pada rentang 24-26 derajat Celsius.', 'Pastikan ruangan tertutup rapat saat AC menyala.', 'Gunakan fitur Timer agar AC mati otomatis 1 jam sebelum bangun.', 'Bersihkan filter AC setiap 3 bulan sekali.', 'Matikan AC jika akan meninggalkan ruangan lebih dari 20 menit.']
+                },
+
+                /* DATA BELANJA */
+                'bulk': { 
+                    title: 'Belanja di Bulk Store', icon: '🛍️', 
+                    img: 'https://images.unsplash.com/photo-1582283084799-a8fc964177eb?w=800&q=80',
+                    desc: 'Panduan berbelanja ala Zero-Waste tanpa menghasilkan sampah kemasan atau plastik kresek.',
+                    steps: ['Kumpulkan toples kaca bekas dan tas kain lipat di rumahmu.', 'Cari lokasi toko curah (Bulk Store) terdekat di kotamu.', 'Timbang dulu wadah kosongmu di kasir (disebut proses Tara).', 'Isi sendiri wadah tersebut dengan produk secukupnya.', 'Bawa ke kasir dan bayar hanya sesuai berat bersih isinya saja.']
+                },
+                'lokal': { 
+                    title: 'Dukung Produk Lokal', icon: '🚜', 
+                    img: 'https://images.unsplash.com/photo-1488459711615-2282397970ad?w=800&q=80',
+                    desc: 'Membeli hasil bumi lokal mengurangi emisi karbon dari transportasi jarak jauh.',
+                    steps: ['Belanja sayur dan buah di pasar tradisional terdekat.', 'Pilih buah yang sedang musim (bukan buah impor).', 'Bawa tas belanja sendiri agar tidak menggunakan kresek.', 'Kenali petani lokal atau pedagang langgananmu.', 'Pilih produk dengan kemasan paling minim.']
+                },
+                'tas-lipat': { 
+                    title: 'Tas Lipat Selalu Sedia', icon: '👜', 
+                    img: 'https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=800&q=80',
+                    desc: 'Lupa bawa tas belanja adalah penyebab utama plastik kresek bertumpuk di rumah.',
+                    steps: ['Siapkan minimal 2 tas lipat (tote bag).', 'Simpan 1 tas di dalam tas utama yang selalu kamu bawa.', 'Simpan 1 tas lagi di dalam bagasi motor atau laci mobil.', 'Cuci tas belanja secara rutin agar tetap higienis.', 'Tolak plastik kresek dengan sopan saat di kasir.']
+                }
+            },
+            openModal(id) {
+                this.activeData = this.guides[id];
+                this.isModalOpen = true;
+            }
+         }">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">Kategori
+                    Solusi Harian</h2>
+                <p class="text-slate-500 text-lg">Pilih kategori yang ingin kamu perbaiki minggu ini. Klik "Baca
+                    Panduan" untuk melihat langkah nyatanya.</p>
+            </div>
+
+            <div class="flex overflow-x-auto hide-scrollbar pb-4 justify-start md:justify-center gap-3 md:gap-4 mb-12"
+                data-aos="zoom-in">
+                <button @click="tab = 'dapur'"
+                    :class="tab === 'dapur' ? 'bg-eco-500 text-white shadow-lg shadow-eco-500/40' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+                    class="whitespace-nowrap px-8 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2">
+                    <span>🍳</span> Zero-Waste Dapur
+                </button>
+                <button @click="tab = 'energi'"
+                    :class="tab === 'energi' ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/40' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+                    class="whitespace-nowrap px-8 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2">
+                    <span>⚡</span> Hemat Energi
+                </button>
+                <button @click="tab = 'belanja'"
+                    :class="tab === 'belanja' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/40' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+                    class="whitespace-nowrap px-8 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2">
+                    <span>🛍️</span> Belanja Pintar
+                </button>
+            </div>
+
+            <div class="relative min-h-[420px]">
+
+                <div x-show="tab === 'dapur'" x-transition
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    <div @click="openModal('kompos')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-eco-50 text-eco-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            🪴</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-eco-600 transition-colors">
+                            Kompos Tanpa Bau</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Panduan membuat kompos takakura
+                            di apartemen atau rumah sempit.</p>
+                        <span class="text-eco-600 font-bold text-sm flex items-center gap-2">Baca Panduan <svg
+                                class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg></span>
+                    </div>
+                    <div @click="openModal('loofah')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-eco-50 text-eco-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                            🧽</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-eco-600 transition-colors">
+                            Spons Alami Loofah</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Ganti spons plastik dengan
+                            jaring oyong kering yang ramah lingkungan.</p>
+                        <span class="text-eco-600 font-bold text-sm flex items-center gap-2">Baca Panduan <svg
+                                class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg></span>
+                    </div>
+                    <div @click="openModal('jelantah')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-eco-50 text-eco-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                            🧪</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-eco-600 transition-colors">
+                            Olah Minyak Jelantah</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Kumpulkan minyak bekas pakaimu
+                            untuk dijadikan bahan bakar biodiesel.</p>
+                        <span class="text-eco-600 font-bold text-sm flex items-center gap-2">Baca Panduan <svg
+                                class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg></span>
+                    </div>
+                </div>
+
+                <div x-show="tab === 'energi'" x-transition
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    <div @click="openModal('vampir')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            💡</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">
+                            Basmi Vampir Listrik</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Hentikan pemborosan listrik
+                            dari alat elektronik yang standby di rumah.</p>
+                        <span class="text-amber-600 font-bold text-sm flex items-center gap-2">Baca Panduan
+                            &rarr;</span>
+                    </div>
+                    <div @click="openModal('pencahayaan')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                            ☀️</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">
+                            Cahaya Alami Rumah</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Tips memaksimalkan sinar
+                            matahari agar tidak perlu menyalakan lampu siang hari.</p>
+                        <span class="text-amber-600 font-bold text-sm flex items-center gap-2">Baca Panduan
+                            &rarr;</span>
+                    </div>
+                    <div @click="openModal('ac-pintar')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                            ❄️</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">
+                            Atur AC Lebih Pintar</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Gunakan pendingin ruangan
+                            secara efisien tanpa membuat tagihan listrik bengkak.</p>
+                        <span class="text-amber-600 font-bold text-sm flex items-center gap-2">Baca Panduan
+                            &rarr;</span>
+                    </div>
+                </div>
+
+                <div x-show="tab === 'belanja'" x-transition
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    <div @click="openModal('bulk')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            🛍️</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                            Bulk Store Guide</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Panduan belanja curah tanpa
+                            menghasilkan sampah kemasan plastik.</p>
+                        <span class="text-blue-600 font-bold text-sm flex items-center gap-2">Baca Panduan &rarr;</span>
+                    </div>
+                    <div @click="openModal('lokal')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                            🚜</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                            Dukung Produk Lokal</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Membeli hasil bumi lokal
+                            mengurangi emisi karbon dari transportasi logistik.</p>
+                        <span class="text-blue-600 font-bold text-sm flex items-center gap-2">Baca Panduan &rarr;</span>
+                    </div>
+                    <div @click="openModal('tas-lipat')"
+                        class="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-2xl transition-all cursor-pointer group flex flex-col">
+                        <div
+                            class="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm">
+                            👜</div>
+                        <h3
+                            class="font-display font-bold text-xl text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                            Tas Lipat Selalu Sedia</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">Tips agar tidak pernah lupa
+                            membawa tas belanja sendiri saat ke minimarket.</p>
+                        <span class="text-blue-600 font-bold text-sm flex items-center gap-2">Baca Panduan &rarr;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div x-show="isModalOpen" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+                <div x-show="isModalOpen" x-transition.opacity class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+                    @click="isModalOpen = false"></div>
+                <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-400"
+                    x-transition:enter-start="opacity-0 translate-y-12 scale-90"
+                    x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                    x-transition:leave="transition ease-in duration-300"
+                    x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                    x-transition:leave-end="opacity-0 translate-y-12 scale-90"
+                    class="relative bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden z-10 flex flex-col lg:flex-row border border-slate-100 max-h-[90vh]">
+
+                    <div class="lg:w-5/12 h-48 lg:h-auto relative">
+                        <img :src="activeData.img" class="absolute inset-0 w-full h-full object-cover">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent flex items-end p-8">
+                            <div class="text-white">
+                                <span
+                                    class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center text-2xl mb-4 border border-white/30"
+                                    x-text="activeData.icon"></span>
+                                <h3 class="font-display font-bold text-2xl md:text-3xl text-white leading-tight"
+                                    x-text="activeData.title"></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-7/12 p-6 md:p-10 flex flex-col h-full overflow-y-auto bg-slate-50 relative">
+                        <button @click="isModalOpen = false"
+                            class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/80 shadow-md text-slate-500 hover:bg-red-500 hover:text-white transition-all flex items-center justify-center z-20">&times;</button>
+
+                        <p class="text-slate-600 mb-8 font-medium leading-relaxed pr-8" x-text="activeData.desc"></p>
+
+                        <h4
+                            class="font-bold text-slate-900 text-sm uppercase tracking-wider mb-4 border-b border-slate-200 pb-2">
+                            Langkah Pelaksanaan</h4>
+
+                        <div class="space-y-3">
+                            <template x-for="(step, index) in activeData.steps" :key="index">
+                                <div
+                                    class="flex gap-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                                    <div class="w-8 h-8 rounded-full bg-eco-100 text-eco-600 font-black flex items-center justify-center flex-shrink-0 text-sm"
+                                        x-text="index + 1"></div>
+                                    <p class="text-slate-700 text-sm leading-relaxed pt-1 font-medium" x-text="step">
+                                    </p>
+                                </div>
+                            </template>
+                        </div>
+
+                        <a href="konten.html"
+                            class="mt-8 block w-full text-center py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-eco-600 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95">
+                            Lihat Tips Lainnya
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-[#f9fafb] border-y border-slate-100 relative overflow-hidden">
+        <div
+            class="absolute top-0 right-0 w-64 h-64 bg-eco-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-64 h-64 bg-teal-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70">
+        </div>
+
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span
+                    class="inline-block px-4 py-1.5 rounded-full bg-eco-50 text-eco-600 text-xs font-bold uppercase tracking-widest mb-4">Bantuan
+                    & Edukasi</span>
+                <h2 class="font-display text-3xl md:text-5xl font-bold text-slate-900 leading-tight">Tanya Jawab <span
+                        class="text-eco-500">Lingkungan.</span></h2>
+                <p class="text-slate-500 mt-4 text-base md:text-lg max-w-2xl mx-auto">Masih ragu untuk memulai? Berikut
+                    adalah beberapa hal yang sering ditanyakan mengenai gaya hidup berkelanjutan.</p>
+            </div>
+
+            <div class="space-y-4 md:space-y-6" data-aos="fade-up" data-aos-delay="200">
+                <div x-data="{ open: false }"
+                    class="group bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden transition-all duration-300 hover:border-eco-300 hover:shadow-xl shadow-sm">
+                    <button @click="open = !open"
+                        class="w-full flex justify-between items-center p-6 md:p-8 text-left transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-50 text-eco-500 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform">💎</span>
+                            <span class="font-bold text-slate-800 text-base md:text-lg leading-snug">Apakah gaya hidup
+                                zero waste itu mahal?</span>
+                        </div>
+                        <div class="ml-4 flex-shrink-0 w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all duration-300"
+                            :class="open ? 'bg-eco-500 border-eco-500 rotate-180' : ''">
+                            <svg class="w-4 h-4" :class="open ? 'text-white' : 'text-slate-500'" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div x-show="open" x-collapse x-cloak
+                        class="px-6 md:px-8 pb-8 pt-0 text-slate-600 text-sm md:text-base leading-relaxed">
+                        <div class="pl-0 md:pl-14 border-t border-slate-100 pt-6">
+                            Sama sekali tidak! Justru menghemat pengeluaran. Konsep utamanya adalah <b>"Reduce"</b>
+                            (mengurangi beli barang sekali pakai) dan <b>"Reuse"</b> (memakai yang sudah ada). Investasi
+                            awal seperti botol minum atau tas kain akan menghemat ribuan rupiah setiap bulannya.
+                        </div>
+                    </div>
+                </div>
+
+                <div x-data="{ open: false }"
+                    class="group bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden transition-all duration-300 hover:border-eco-300 hover:shadow-xl shadow-sm">
+                    <button @click="open = !open"
+                        class="w-full flex justify-between items-center p-6 md:p-8 text-left transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-50 text-eco-500 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform">🛢️</span>
+                            <span class="font-bold text-slate-800 text-base md:text-lg leading-snug">Bagaimana membuang
+                                minyak jelantah bekas goreng?</span>
+                        </div>
+                        <div class="ml-4 flex-shrink-0 w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all duration-300"
+                            :class="open ? 'bg-eco-500 border-eco-500 rotate-180' : ''">
+                            <svg class="w-4 h-4" :class="open ? 'text-white' : 'text-slate-500'" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div x-show="open" x-collapse x-cloak
+                        class="px-6 md:px-8 pb-8 pt-0 text-slate-600 text-sm md:text-base leading-relaxed">
+                        <div class="pl-0 md:pl-14 border-t border-slate-100 pt-6">
+                            <b>Jangan dibuang ke wastafel!</b> Minyak akan membeku dan menyumbat pipa serta mencemari
+                            air tanah. Kumpulkan di botol bekas, lalu setorkan ke bank sampah atau pengolah biodiesel
+                            terdekat. Beberapa komunitas bahkan menukarnya dengan uang atau emas murni!
+                        </div>
+                    </div>
+                </div>
+
+                <div x-data="{ open: false }"
+                    class="group bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden transition-all duration-300 hover:border-eco-300 hover:shadow-xl shadow-sm">
+                    <button @click="open = !open"
+                        class="w-full flex justify-between items-center p-6 md:p-8 text-left transition-colors">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-50 text-eco-500 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform">💡</span>
+                            <span class="font-bold text-slate-800 text-base md:text-lg leading-snug">Apakah mematikan
+                                lampu sangat berpengaruh?</span>
+                        </div>
+                        <div class="ml-4 flex-shrink-0 w-8 h-8 rounded-full border-2 border-slate-300 flex items-center justify-center transition-all duration-300"
+                            :class="open ? 'bg-eco-500 border-eco-500 rotate-180' : ''">
+                            <svg class="w-4 h-4" :class="open ? 'text-white' : 'text-slate-500'" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div x-show="open" x-collapse x-cloak
+                        class="px-6 md:px-8 pb-8 pt-0 text-slate-600 text-sm md:text-base leading-relaxed">
+                        <div class="pl-0 md:pl-14 border-t border-slate-100 pt-6">
+                            Sangat berpengaruh! Sebagian besar listrik di Indonesia masih dihasilkan dari pembakaran
+                            batu bara yang melepas emisi karbon sangat besar. Menghemat listrik artinya Anda
+                            berkontribusi langsung dalam mengurangi aktivitas PLTU yang mencemari udara.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 lg:py-28 relative overflow-hidden bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="zoom-in">
+            <div
+                class="bg-slate-900 rounded-[3rem] md:rounded-[4rem] p-10 md:p-20 text-center shadow-2xl relative overflow-hidden">
+                <div
+                    class="absolute -top-24 -left-24 w-64 h-64 bg-eco-500 rounded-full mix-blend-screen filter blur-3xl opacity-30">
+                </div>
+                <div
+                    class="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-500 rounded-full mix-blend-screen filter blur-3xl opacity-30">
+                </div>
+
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <span class="text-eco-400 font-black text-xs uppercase tracking-[0.3em] mb-6 block">Gabung
+                        Komunitas</span>
+                    <h2 class="font-display text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">Satu Aksi, <br
+                            class="sm:hidden"> <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-eco-300 to-teal-200">Seribu
+                            Manfaat.</span></h2>
+                    <p class="text-slate-400 mb-10 text-base md:text-lg leading-relaxed">Dapatkan tips "Eco-Hack" baru
+                        setiap minggunya langsung di inbox-mu.</p>
+
+                    <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+                        <input type="email" placeholder="Alamat email kamu..."
+                            class="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-eco-500 backdrop-blur-sm transition-all text-sm md:text-base"
+                            required>
+                        <button type="submit"
+                            class="px-8 py-4 bg-eco-500 hover:bg-eco-400 text-white font-black rounded-2xl transition-all shadow-lg active:scale-95 flex-shrink-0 text-sm md:text-base">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-slate-900 pt-20 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="lg:col-span-1">
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-eco-500 rounded-lg flex items-center justify-center text-white">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                                </path>
+                            </svg>
+                        </div>
+                        <span class="font-display font-bold text-2xl text-white">Eco<span
+                                class="text-eco-500">Hacks.</span></span>
+                    </a>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Proyek kompetisi Software Engineering
+                        HIMA-RPL. Menggabungkan desain, kode, dan cinta lingkungan.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Halaman Utama</h4>
+                    <ul class="space-y-3 text-slate-400 text-sm">
+                        <li><a href="#hero" class="hover:text-eco-400 transition-colors">Beranda</a></li>
+                        <li><a href="about.html" class="hover:text-eco-400 transition-colors">Tentang Tim</a></li>
+                        <li><a href="kalkulatorjejak.html" class="hover:text-eco-400 transition-colors">Kalkulator
+                                Jejak</a></li>
+                        <li><a href="contact.html" class="hover:text-eco-400 transition-colors">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Kategori Hacks</h4>
+                    <ul class="space-y-3 text-slate-400 text-sm">
+                        <li><a href="konten.html" class="hover:text-eco-400 transition-colors">Dapur & Makanan</a></li>
+                        <li><a href="konten.html" class="hover:text-eco-400 transition-colors">Hemat Listrik</a></li>
+                        <li><a href="konten.html" class="hover:text-eco-400 transition-colors">Air & Sanitasi</a></li>
+                        <li><a href="konten.html" class="hover:text-eco-400 transition-colors">Belanja Curah</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Dukungan</h4>
+                    <ul class="space-y-3 text-slate-400 text-sm">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-eco-500 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Universitas Merdeka Malang<br>Jawa Timur, Indonesia</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 text-eco-500 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span>aethercode@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">© 2026 Tim Aether Code. Universitas Merdeka Malang.</p>
+                <div class="flex gap-4 text-sm text-slate-500">
+                    <a href="#" class="hover:text-white transition">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-white transition">Syarat Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        const words = ["Aksi Nyata.", "Kepedulianmu.", "Langkah Kecil."];
+        let i = 0;
+        let timer;
+        const speed = 100;
+        const delay = 2000;
+
+        function typingEffect() {
+            let word = words[i].split("");
+            var loopTyping = function () {
+                if (word.length > 0) {
+                    document.getElementById('typewriter').innerHTML += word.shift();
+                } else {
+                    setTimeout(deletingEffect, delay);
+                    return false;
+                };
+                timer = setTimeout(loopTyping, speed);
+            };
+            loopTyping();
+        }
+
+        function deletingEffect() {
+            let word = words[i].split("");
+            var loopDeleting = function () {
+                if (word.length > 0) {
+                    word.pop();
+                    document.getElementById('typewriter').innerHTML = word.join("");
+                } else {
+                    if (words.length > (i + 1)) {
+                        i++;
+                    } else {
+                        i = 0;
+                    };
+                    typingEffect();
+                    return false;
+                };
+                timer = setTimeout(loopDeleting, speed / 2);
+            };
+            loopDeleting();
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById('typewriter').innerHTML = "";
+            setTimeout(typingEffect, 500);
+        });
+    </script>
+</body>
+
+</html>
