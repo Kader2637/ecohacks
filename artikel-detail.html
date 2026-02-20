@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baca Artikel | EcoHacks</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
@@ -26,12 +29,12 @@
             Alpine.data('articleDetail', () => ({
                 article: null,
                 isLoading: true,
-                
+
                 init() {
                     // 1. Ambil angka ID dari URL (contoh: ?id=2)
                     const params = new URLSearchParams(window.location.search);
                     const id = parseInt(params.get('id'));
-                    
+
                     // 2. Database Dummy (Harus sama persis dengan yang di konten.html)
                     const articles = [
                         { id: 1, title: 'Panduan Membuat Kompos Takakura di Lahan Sempit', category: 'Dapur & Makanan', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1200&q=80', desc: 'Cara praktis mengubah sisa makanan dan sampah organik dapur menjadi pupuk subur tanpa menimbulkan bau busuk di dalam rumah atau apartemen.', date: '12 Feb 2026', readTime: '5 Min', icon: '🪴' },
@@ -46,110 +49,161 @@
                     setTimeout(() => {
                         this.article = articles.find(a => a.id === id);
                         this.isLoading = false;
-                        if(this.article) document.title = this.article.title + " | EcoHacks";
+                        if (this.article) document.title = this.article.title + " | EcoHacks";
                     }, 600);
                 }
             }))
         })
     </script>
     <style>
-        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(16px); }
+        .glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+        }
     </style>
 </head>
+
 <body class="bg-slate-50 text-slate-800 antialiased font-sans" x-data="articleDetail">
 
     <div x-data="{ scrolled: false, mobileMenu: false }" @scroll.window="scrolled = (window.pageYOffset > 50)">
-        
-        <nav :class="{'py-5 bg-transparent': !scrolled, 'py-3 glass shadow-lg': scrolled}" class="fixed w-full z-50 top-0 transition-all duration-300">
+
+        <nav :class="{'py-5 bg-transparent': !scrolled, 'py-3 glass shadow-lg': scrolled}"
+            class="fixed w-full z-50 top-0 transition-all duration-300">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center">
-                    
+
                     <a href="index.html" class="flex items-center gap-2 group">
-                        <div class="w-10 h-10 bg-eco-500 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-12 transition-transform">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        <div
+                            class="w-10 h-10 bg-eco-500 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:rotate-12 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                                </path>
+                            </svg>
                         </div>
-                        <span class="font-display font-bold text-2xl tracking-tight text-slate-900">Eco<span class="text-eco-500">Hacks.</span></span>
+                        <span class="font-display font-bold text-2xl tracking-tight text-slate-900">Eco<span
+                                class="text-eco-500">Hacks.</span></span>
                     </a>
 
                     <div class="hidden lg:flex items-center space-x-8">
-                        <a href="index.html" class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Beranda</a>
-                        <a href="index.html#kalkulator" class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Kalkulator Jejak</a>
-                        
-                        <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative">
-                            <button class="flex items-center gap-1 text-sm font-semibold text-eco-600 border-b-2 border-eco-500 transition-colors pb-1">
+                        <a href="index.html"
+                            class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Beranda</a>
+                        <a href="index.html#kalkulator"
+                            class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Kalkulator
+                            Jejak</a>
+
+                        <div x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false"
+                            class="relative">
+                            <a href="konten.html"
+                                class="flex items-center gap-1 text-sm font-semibold text-eco-600 border-b-2 border-eco-500 transition-colors pb-1">
                                 Artikel Edukasi
-                                <svg :class="{'rotate-180': open}" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div x-show="open" x-transition.opacity class="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 border border-slate-100">
-                                <a href="konten.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-eco-50 hover:text-eco-600">Semua Artikel</a>
-                                <a href="konten.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-eco-50 hover:text-eco-600">Zero Waste</a>
-                                <a href="konten.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-eco-50 hover:text-eco-600">Hemat Energi</a>
-                            </div>
+                            </a>
+                            
                         </div>
-                        
-                        <a href="about.html" class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Tentang Kami</a>
+
+                        <a href="about.html"
+                            class="text-sm font-semibold text-slate-600 hover:text-eco-500 transition-colors pb-1">Tentang
+                            Kami</a>
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <a href="contact.html" class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all bg-dark rounded-full hover:bg-eco-600 hover:shadow-lg hover:shadow-eco-500/30">
+                        <a href="contact.html"
+                            class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white transition-all bg-dark rounded-full hover:bg-eco-600 hover:shadow-lg hover:shadow-eco-500/30">
                             Kontak Tim
                         </a>
-                        
-                        <button @click="mobileMenu = !mobileMenu" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
-                            <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                            <svg x-show="mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+
+                        <button @click="mobileMenu = !mobileMenu"
+                            class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                            <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                            <svg x-show="mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" style="display: none;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div x-show="mobileMenu" x-collapse class="lg:hidden bg-white border-t border-slate-100 shadow-xl absolute w-full">
+            <div x-show="mobileMenu" x-collapse
+                class="lg:hidden bg-white border-t border-slate-100 shadow-xl absolute w-full">
                 <div class="px-4 pt-2 pb-6 space-y-1">
-                    <a href="index.html" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Beranda</a>
-                    <a href="index.html#kalkulator" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Kalkulator Jejak</a>
-                    <a href="konten.html" class="block px-3 py-3 rounded-lg text-base font-semibold text-eco-600 bg-eco-50">Artikel Edukasi</a>
-                    <a href="about.html" class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Tentang Kami</a>
-                    <a href="contact.html" class="block px-3 py-3 mt-4 text-center rounded-lg text-base font-bold text-white bg-eco-500">Kontak Tim</a>
+                    <a href="index.html"
+                        class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Beranda</a>
+                    <a href="index.html#kalkulator"
+                        class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Kalkulator
+                        Jejak</a>
+                    <a href="konten.html"
+                        class="block px-3 py-3 rounded-lg text-base font-semibold text-eco-600 bg-eco-50">Artikel
+                        Edukasi</a>
+                    <a href="about.html"
+                        class="block px-3 py-3 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50">Tentang
+                        Kami</a>
+                    <a href="contact.html"
+                        class="block px-3 py-3 mt-4 text-center rounded-lg text-base font-bold text-white bg-eco-500">Kontak
+                        Tim</a>
                 </div>
             </div>
         </nav>
     </div>
 
     <main class="pt-32 pb-24 min-h-screen relative">
-        
+
         <div x-show="isLoading" class="absolute inset-0 flex flex-col items-center justify-center z-10 pt-40">
-            <svg class="w-12 h-12 text-eco-500 animate-spin mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <svg class="w-12 h-12 text-eco-500 animate-spin mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                </path>
+            </svg>
             <p class="font-bold text-slate-500 animate-pulse">Memuat Artikel...</p>
         </div>
 
         <div x-show="!isLoading && !article" x-cloak class="max-w-3xl mx-auto px-6 text-center pt-20">
             <h1 class="font-display text-4xl font-bold text-slate-900 mb-4">Artikel Tidak Ditemukan</h1>
             <p class="text-slate-500 mb-8">Maaf, artikel yang kamu cari mungkin sudah dihapus atau URL-nya salah.</p>
-            <a href="konten.html" class="px-8 py-3 bg-eco-500 text-white font-bold rounded-full hover:bg-eco-600 transition">Kembali ke Daftar Artikel</a>
+            <a href="konten.html"
+                class="px-8 py-3 bg-eco-500 text-white font-bold rounded-full hover:bg-eco-600 transition">Kembali ke
+                Daftar Artikel</a>
         </div>
 
         <article x-show="!isLoading && article" x-cloak class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-            
-            <a href="konten.html" class="inline-flex items-center gap-2 text-slate-500 hover:text-eco-600 font-bold text-sm mb-10 transition-colors group">
-                <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center group-hover:border-eco-500">
-                    <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+
+            <a href="konten.html"
+                class="inline-flex items-center gap-2 text-slate-500 hover:text-eco-600 font-bold text-sm mb-10 transition-colors group">
+                <div
+                    class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center group-hover:border-eco-500">
+                    <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                        </path>
+                    </svg>
                 </div>
                 Kembali ke Eksplorasi
             </a>
 
             <div class="mb-8" data-aos="fade-up">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="bg-eco-100 text-eco-600 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5">
+                    <span
+                        class="bg-eco-100 text-eco-600 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5">
                         <span x-text="article.icon"></span> <span x-text="article.category"></span>
                     </span>
                     <span class="text-sm font-medium text-slate-400" x-text="article.date"></span>
                     <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
                     <span class="text-sm font-medium text-slate-400 flex items-center gap-1">
-                        <svg class="w-4 h-4 text-eco-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-4 h-4 text-eco-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
                         <span x-text="article.readTime"></span>
                     </span>
                 </div>
-                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-8" x-text="article.title"></h1>
+                <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-8"
+                    x-text="article.title"></h1>
             </div>
 
             <div class="w-full h-80 md:h-[500px] rounded-[2rem] overflow-hidden mb-12 shadow-2xl" data-aos="zoom-in">
@@ -157,30 +211,45 @@
             </div>
 
             <div class="prose prose-lg max-w-3xl mx-auto prose-slate text-slate-600 leading-relaxed" data-aos="fade-up">
-                
+
                 <p class="text-2xl font-medium text-slate-800 mb-8 leading-snug" x-text="article.desc"></p>
-                
-                <p class="mb-6">Perubahan iklim dan pemanasan global bukanlah ancaman yang akan terjadi di masa depan, melainkan kenyataan yang sedang kita hadapi saat ini. Banyak dari kita merasa bahwa satu orang tidak bisa mengubah dunia, namun jika jutaan orang melakukan satu kebaikan kecil dari rumah mereka, dampaknya akan sangat masif.</p>
-                
-                <blockquote class="border-l-4 border-eco-500 pl-6 py-2 my-10 bg-eco-50 rounded-r-2xl italic text-slate-700 font-medium">
-                    "Kemajuan teknologi tidak seharusnya merusak alam, melainkan menjadi alat utama kita untuk memulihkannya kembali."
+
+                <p class="mb-6">Perubahan iklim dan pemanasan global bukanlah ancaman yang akan terjadi di masa depan,
+                    melainkan kenyataan yang sedang kita hadapi saat ini. Banyak dari kita merasa bahwa satu orang tidak
+                    bisa mengubah dunia, namun jika jutaan orang melakukan satu kebaikan kecil dari rumah mereka,
+                    dampaknya akan sangat masif.</p>
+
+                <blockquote
+                    class="border-l-4 border-eco-500 pl-6 py-2 my-10 bg-eco-50 rounded-r-2xl italic text-slate-700 font-medium">
+                    "Kemajuan teknologi tidak seharusnya merusak alam, melainkan menjadi alat utama kita untuk
+                    memulihkannya kembali."
                 </blockquote>
 
-                <h3 class="font-display text-2xl font-bold text-slate-900 mt-10 mb-4">Langkah Pertama yang Harus Kamu Lakukan</h3>
-                <p class="mb-6">Sebagai permulaan, kamu tidak perlu langsung mengubah 100% gaya hidupmu. Konsistensi jauh lebih penting daripada kesempurnaan sesaat. Coba terapkan teori 21 hari: pilih satu tindakan kecil dari panduan di atas, lakukan secara rutin selama 21 hari hingga menjadi kebiasaan otomatis di bawah sadarmu.</p>
+                <h3 class="font-display text-2xl font-bold text-slate-900 mt-10 mb-4">Langkah Pertama yang Harus Kamu
+                    Lakukan</h3>
+                <p class="mb-6">Sebagai permulaan, kamu tidak perlu langsung mengubah 100% gaya hidupmu. Konsistensi
+                    jauh lebih penting daripada kesempurnaan sesaat. Coba terapkan teori 21 hari: pilih satu tindakan
+                    kecil dari panduan di atas, lakukan secara rutin selama 21 hari hingga menjadi kebiasaan otomatis di
+                    bawah sadarmu.</p>
 
                 <div class="bg-slate-900 rounded-2xl p-8 text-white my-10 shadow-xl">
                     <h4 class="font-bold text-eco-400 mb-2">Penting untuk Diingat 💡</h4>
-                    <p class="text-slate-300 text-sm">Artikel ini adalah data simulasi (dummy) yang dibuat khusus untuk keperluan demonstrasi fungsionalitas di Software Engineering Competition HIMA-RPL 2026. Di sistem aslinya, teks ini akan ditarik dari *Database* seperti MySQL atau MongoDB.</p>
+                    <p class="text-slate-300 text-sm">Artikel ini adalah data simulasi (dummy) yang dibuat khusus untuk
+                        keperluan demonstrasi fungsionalitas di Software Engineering Competition HIMA-RPL 2026. Di
+                        sistem aslinya, teks ini akan ditarik dari *Database* seperti MySQL atau MongoDB.</p>
                 </div>
-                
-                <p class="mb-6">Mari bergandengan tangan memulai revolusi hijau ini. Bagikan artikel ini ke keluargamu jika menurutmu bermanfaat. Mari bertindak sekarang, sebelum bumi kehilangan kesejukannya.</p>
+
+                <p class="mb-6">Mari bergandengan tangan memulai revolusi hijau ini. Bagikan artikel ini ke keluargamu
+                    jika menurutmu bermanfaat. Mari bertindak sekarang, sebelum bumi kehilangan kesejukannya.</p>
 
                 <div class="flex items-center gap-4 mt-12 pt-8 border-t border-slate-200">
                     <span class="font-bold text-slate-900 text-sm uppercase tracking-wider">Bagikan:</span>
-                    <button class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex justify-center items-center hover:bg-blue-600 hover:text-white transition-colors">f</button>
-                    <button class="w-10 h-10 rounded-full bg-sky-100 text-sky-500 flex justify-center items-center hover:bg-sky-500 hover:text-white transition-colors">X</button>
-                    <button class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex justify-center items-center hover:bg-green-600 hover:text-white transition-colors">W</button>
+                    <button
+                        class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex justify-center items-center hover:bg-blue-600 hover:text-white transition-colors">f</button>
+                    <button
+                        class="w-10 h-10 rounded-full bg-sky-100 text-sky-500 flex justify-center items-center hover:bg-sky-500 hover:text-white transition-colors">X</button>
+                    <button
+                        class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex justify-center items-center hover:bg-green-600 hover:text-white transition-colors">W</button>
                 </div>
             </div>
 
@@ -191,25 +260,28 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                 <div class="lg:col-span-1">
-                    <a :href="'artikel-detail.html?id=' + article.id"class="flex items-center gap-2 mb-6">
+                    <a href="#" class="flex items-center gap-2 mb-6">
                         <div class="w-8 h-8 bg-eco-500 rounded-lg flex items-center justify-center text-white">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
+                                </path>
+                            </svg>
                         </div>
-                        <span class="font-display font-bold text-2xl text-white">Eco<span class="text-eco-500">Hacks.</span></span>
+                        <span class="font-display font-bold text-2xl text-white">Eco<span
+                                class="text-eco-500">Hacks.</span></span>
                     </a>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Proyek kompetisi Software Engineering HIMA-RPL Politeknik Negeri Indramayu. Menggabungkan desain, kode, dan cinta lingkungan.</p>
-                    <div class="flex gap-4">
-                        <a :href="'artikel-detail.html?id=' + article.id"class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-eco-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
-                        <a :href="'artikel-detail.html?id=' + article.id"class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-eco-500 hover:text-white transition-all"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Proyek kompetisi Software Engineering
+                        HIMA-RPL. Menggabungkan desain, kode, dan cinta lingkungan.</p>
                 </div>
-                
+
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Halaman Utama</h4>
                     <ul class="space-y-3 text-slate-400 text-sm">
-                        <li><a href="index.html" class="hover:text-eco-400 transition-colors">Beranda</a></li>
+                        <li><a href="#hero" class="hover:text-eco-400 transition-colors">Beranda</a></li>
                         <li><a href="about.html" class="hover:text-eco-400 transition-colors">Tentang Tim</a></li>
-                        <li><a href="index.html#kalkulator" class="hover:text-eco-400 transition-colors">Kalkulator Jejak</a></li>
+                        <li><a href="kalkulatorjejak.html" class="hover:text-eco-400 transition-colors">Kalkulator
+                                Jejak</a></li>
                         <li><a href="contact.html" class="hover:text-eco-400 transition-colors">Hubungi Kami</a></li>
                     </ul>
                 </div>
@@ -223,27 +295,39 @@
                         <li><a href="konten.html" class="hover:text-eco-400 transition-colors">Belanja Curah</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Dukungan</h4>
                     <ul class="space-y-3 text-slate-400 text-sm">
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 text-eco-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span>Politeknik Negeri Indramayu<br>Jawa Barat, Indonesia</span>
+                            <svg class="w-5 h-5 text-eco-500 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Universitas Merdeka Malang<br>Jawa Timur, Indonesia</span>
                         </li>
                         <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-eco-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            <span>hello@ecohacks.id</span>
+                            <svg class="w-5 h-5 text-eco-500 flex-shrink-0" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span>aethercode@gmail.com</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-slate-500 text-sm">© 2026 Nama Tim Kamu. Hak Cipta Dilindungi Undang-Undang.</p>
+                <p class="text-slate-500 text-sm">© 2026 Tim Aether Code. Universitas Merdeka Malang.</p>
                 <div class="flex gap-4 text-sm text-slate-500">
-                    <a :href="'artikel-detail.html?id=' + article.id"class="hover:text-white transition">Kebijakan Privasi</a>
-                    <a :href="'artikel-detail.html?id=' + article.id"class="hover:text-white transition">Syarat Ketentuan</a>
+                    <a href="#" class="hover:text-white transition">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-white transition">Syarat Ketentuan</a>
                 </div>
             </div>
         </div>
@@ -253,4 +337,5 @@
         AOS.init({ once: true, offset: 50, duration: 800, easing: 'ease-out-cubic' });
     </script>
 </body>
+
 </html>
